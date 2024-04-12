@@ -20,3 +20,7 @@ get data
 
 > await probe.screenshot()
 ```
+
+# for developer
+
+[Puppeteer](https://pptr.dev/)

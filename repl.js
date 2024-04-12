@@ -8,11 +8,12 @@ async function main () {
   const page = await browser.newPage()
 
   async function checkAuth (page) {
+    console.log('Connecting to ' + domain + ' to check...')
     await page.goto(domain + '/empire.aspx', { waitUntil: 'networkidle2' })
 
     const url = await page.url()
     if (url !== domain + '/empire.aspx') {
-      console.log('Not logged in')
+      console.log('Not logged in, using config to log in...')
       await page.goto(domain, { waitUntil: 'networkidle2' })
       await page.screenshot({ path: 'screenshot.png' })
       const input = await page.waitForSelector('form input[name="email"]')
@@ -26,7 +27,7 @@ async function main () {
       await page.goto(domain + '/empire.aspx', { waitUntil: 'networkidle2' })
       await page.screenshot({ path: 'screenshot.png' })
       if (await page.url() !== domain + '/empire.aspx') {
-        console.log('Failed to log in')
+        console.log('Failed to log in, check credentials in config.json')
         process.exit(1)
       }
     }
@@ -45,8 +46,12 @@ const probe = {
   screenshot: async () => {
     await page.screenshot({ path: 'screenshot.png' })
     console.log('Screenshot taken')
+    return 'ok'
   }
 }
 ;(async () => {
+  console.clear()
+  console.log('--- Probe Online ---')
   await main()
+  console.log('--- Probe Ready, Input Command ---')
 })()
