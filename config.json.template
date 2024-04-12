@@ -1,0 +1,7 @@
+{
+  "account": {
+    "email": "email",
+    "password": "password"
+  },
+  "domain": "domain.com"
+}
